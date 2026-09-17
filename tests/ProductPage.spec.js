@@ -81,7 +81,7 @@ test.describe('Product page validation', () => {
     });
 
 });
-
+//asd
 
 //get by role uses - ADR based attributes - it will query the accesibility tree by get by role & find the element
 // get by label & get by placeholder
