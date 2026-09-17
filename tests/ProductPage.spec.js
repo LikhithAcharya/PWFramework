@@ -72,7 +72,7 @@ test.describe('Product page validation', () => {
         await expect(productPrices).toEqual(sortedProductPrices);
     });
 
-    test.only('Validate Product Filtering by Price (High to Low)', async ({ page }) => {
+    test('Validate Product Filtering by Price (High to Low)', async ({ page }) => {
        
         await productPage.filterbyPriceHighToLow();
         const productPrices = await productPage.getProductPrices();
