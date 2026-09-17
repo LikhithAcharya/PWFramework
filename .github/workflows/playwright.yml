@@ -13,7 +13,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [1/2, 2/2]
+        shardIndex: [1, 2]
+        shardTotal: [2]
 
     steps:
       - name: Checkout code
@@ -32,4 +33,47 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: npx playwright test --shard=${{ matrix.shard }}
+        run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
+
+      - name: Upload Allure results (shard ${{ matrix.shardIndex }})
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: allure-results-${{ matrix.shardIndex }}
+          path: allure-results
+          retention-days: 30
+
+  allure-report:
+    needs: playwright-tests
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Download all Allure results
+        uses: actions/download-artifact@v8
+        with:
+          pattern: allure-results-*
+          path: allure-results
+          merge-multiple: true
+
+      - name: Generate Allure report
+        run: npx allure generate allure-results --clean -o test-results/allure-report
+
+      - name: Upload Allure report
+        uses: actions/upload-artifact@v7
+        with:
+          name: allure-report
+          path: test-results/allure-report
+          retention-days: 30
