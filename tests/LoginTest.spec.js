@@ -7,5 +7,5 @@ test ('Login Test', async ({page}) => {
     await homePage.gotoLoginPage(BASE_URL);
     await homePage.Login(User_Name, Password);
     await expect(page).toHaveURL('https://www.saucedemo.com/inventory.html');   
-    
+    //rtrthrththtthtrhtrhthrrrhrh
 })

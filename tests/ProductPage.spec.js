@@ -72,7 +72,7 @@ test.describe('Product page validation', () => {
         await expect(productPrices).toEqual(sortedProductPrices);
     });
 
-    test.only('Validate Product Filtering by Price (High to Low)', async ({ page }) => {
+    test('Validate Product Filtering by Price (High to Low)', async ({ page }) => {
        
         await productPage.filterbyPriceHighToLow();
         const productPrices = await productPage.getProductPrices();
@@ -81,7 +81,7 @@ test.describe('Product page validation', () => {
     });
 
 });
-
+//asd
 
 //get by role uses - ADR based attributes - it will query the accesibility tree by get by role & find the element
 // get by label & get by placeholder
